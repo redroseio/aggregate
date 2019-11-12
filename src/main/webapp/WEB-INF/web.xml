@@ -32,7 +32,7 @@
   <servlet>
     <servlet-name>xsrf</servlet-name>
     <servlet-class>
-      com.google.gwt.user.server.rpc.XsrfTokenServiceServlet
+      org.opendatakit.aggregate.redrose.MyXsrfServlet
     </servlet-class>
   </servlet>
   <servlet-mapping>

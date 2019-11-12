@@ -158,7 +158,7 @@ public final class HtmlConsts {
   /**
    * for click-jacking prevention
    */
-  public static final String X_FRAME_OPTIONS = "X-Frame-Options";
-  public static final String X_FRAME_SAMEORIGIN = "SAMEORIGIN";
+  public static final String X_FRAME_OPTIONS = "Referrer";
+  public static final String X_FRAME_SAMEORIGIN = "https://google.com";
 
 }

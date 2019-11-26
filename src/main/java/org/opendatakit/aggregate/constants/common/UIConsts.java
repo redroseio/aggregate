@@ -45,5 +45,4 @@ public class UIConsts {
   public static final String REPROMPT_FOR_NAME_TXT = "That group already exists. Please enter a new name";
   public static final String PROMPT_FOR_EMAIL_TXT = "Please enter the e-mail address that will be granted access to these documents";
   public static final String REPROMPT_FOR_EMAIL_TXT = "That is not a valid e-mail address. Please enter the e-mail address that will be granted access to these documents";
-
 }

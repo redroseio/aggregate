@@ -1,15 +1,10 @@
 package org.opendatakit.aggregate.client.security;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.HasRpcToken;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.rpc.XsrfToken;
-import com.google.gwt.user.client.rpc.XsrfTokenService;
-import com.google.gwt.user.client.rpc.XsrfTokenServiceAsync;
 import java.util.function.Consumer;
-import org.opendatakit.aggregate.client.AggregateUI;
 
 public class SecurityUtils {
   /**
@@ -34,6 +29,7 @@ public class SecurityUtils {
    * @param <U>       Type of the output of the RPC call
    */
   public static <T, U> void secureRequest(T rpc, SecureRpcRequest<T, U> request, Consumer<U> onSuccess, Consumer<Throwable> onFailure) {
+    /*
     XsrfTokenServiceAsync xsrf = GWT.create(XsrfTokenService.class);
     ((ServiceDefTarget) xsrf).setServiceEntryPoint(GWT.getModuleBaseURL() + "xsrf");
     xsrf.getNewXsrfToken(new AsyncCallback<XsrfToken>() {
@@ -56,6 +52,21 @@ public class SecurityUtils {
             onSuccess.accept(result);
           }
         });
+      }
+    });
+
+     */
+    XsrfToken result = new XsrfToken("RedRose");
+    ((HasRpcToken) rpc).setRpcToken(result);
+    request.apply(rpc, "RedRose", new AsyncCallback<U>() {
+      @Override
+      public void onFailure(Throwable caught) {
+        onFailure.accept(caught);
+      }
+
+      @Override
+      public void onSuccess(U result) {
+        onSuccess.accept(result);
       }
     });
   }

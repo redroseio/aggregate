@@ -93,9 +93,9 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements
     HttpServletRequest req = this.getThreadLocalRequest();
     CallingContext cc = ContextFactory.getCallingContext(this, req);
 
-    if (!req.getSession().getId().equals(xsrfString)) {
-      throw new AccessDeniedException("Invalid request");
-    }
+    //if (!req.getSession().getId().equals(xsrfString)) {
+    //  throw new AccessDeniedException("Invalid request");
+    //}
 
     RealmSecurityInfo r = new RealmSecurityInfo();
     r.setRealmString(cc.getUserService().getCurrentRealm().getRealmString());

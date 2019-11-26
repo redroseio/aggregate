@@ -137,7 +137,9 @@ public class ContextFactory {
           secureServerUrl = "https://" + identifiedHostname + path;
         }
       }
-      webApplicationBase = path;
+      //webApplicationBase = path;
+      webApplicationBase = identifiedScheme + "://" + identifiedHostname + BasicConsts.COLON
+              + Integer.toString(identifiedSecurePort) + path;
     }
 
     CallingContextImpl(CallingContext context) {

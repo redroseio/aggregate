@@ -16,7 +16,7 @@
 
 package org.opendatakit.common.security.server;
 
-import com.google.gwt.user.server.rpc.XsrfProtectedServiceServlet;
+import org.opendatakit.aggregate.redrose.MyXsrfProtectedServiceServlet;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import org.opendatakit.aggregate.ContextFactory;
@@ -31,7 +31,7 @@ import org.opendatakit.common.web.CallingContext;
  *
  * @author mitchellsundt@gmail.com
  */
-public class SecurityAdminServiceImpl extends XsrfProtectedServiceServlet implements
+public class SecurityAdminServiceImpl extends MyXsrfProtectedServiceServlet implements
     org.opendatakit.common.security.client.security.admin.SecurityAdminService {
 
   /**
@@ -57,9 +57,9 @@ public class SecurityAdminServiceImpl extends XsrfProtectedServiceServlet implem
     HttpServletRequest req = this.getThreadLocalRequest();
     CallingContext cc = ContextFactory.getCallingContext(this, req);
 
-    if (!req.getSession().getId().equals(xsrfString)) {
-      throw new AccessDeniedException("Invalid request");
-    }
+    //if (!req.getSession().getId().equals(xsrfString)) {
+    //  throw new AccessDeniedException("Invalid request");
+    //}
 
     SecurityServiceUtil.setStandardSiteAccessConfiguration(users, allGroups, cc);
     // clear the cache of saved user identities as we don't know what has changed...

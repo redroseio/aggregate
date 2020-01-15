@@ -19,6 +19,9 @@ plugins {
   id 'checkstyle'
   id 'de.fuerstenau.buildconfig' version '1.1.8'
 }
+
+apply plugin: 'maven'
+apply plugin: 'java'
 apply plugin: 'gwt'
 apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 apply plugin: 'docker-compose'
@@ -155,6 +158,7 @@ war {
 }
 
 gretty {
+  servletContainer = 'jetty9'
   contextPath = '/'
   host = 'localhost'
   logDir = 'logs'
@@ -196,6 +200,18 @@ task("checkConf") {
         throw new GradleException("Missing configuration files at src/main/resources: ${missingFiles}")
       }
   }
+}
+
+task writeNewPom {
+  pom {
+    project {
+      groupId 'org.opendatakit.aggregate'
+      artifactId 'aggregate'
+      version '1.0.0'
+
+      inceptionYear '2020'
+    }
+  }.writeTo("build/newpom.xml")
 }
 
 compileJava.dependsOn checkConf

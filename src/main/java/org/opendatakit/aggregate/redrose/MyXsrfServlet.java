@@ -14,41 +14,41 @@ import com.google.gwt.util.tools.shared.Md5Utils;
 import com.google.gwt.util.tools.shared.StringUtils;
 
 public class MyXsrfServlet extends RemoteServiceServlet implements XsrfTokenService {
-	private static final long serialVersionUID = 1L;
-	public MyXsrfServlet() {
-		this(null);
-	}
+    private static final long serialVersionUID = 1L;
+    public MyXsrfServlet() {
+        this(null);
+    }
 
-	public MyXsrfServlet(String sessionCookieName) {
-	}
+    public MyXsrfServlet(String sessionCookieName) {
+    }
 
-	public MyXsrfServlet(Object delegate) {
-		this(delegate, null);
-	}
+    public MyXsrfServlet(Object delegate) {
+        this(delegate, null);
+    }
 
-	public MyXsrfServlet(Object delegate,
-						 String sessionCookieName) {
-		super(delegate);
-	}
+    public MyXsrfServlet(Object delegate,
+                         String sessionCookieName) {
+        super(delegate);
+    }
 
-	public XsrfToken getNewXsrfToken() {
-		return new XsrfToken(this.generateTokenValue());
-	}
+    public XsrfToken getNewXsrfToken() {
+        return new XsrfToken(this.generateTokenValue());
+    }
 
-	public void init() {
-	}
+    public void init() {
+    }
 
-	private String getInitParameterValue(String name) {
-		String paramValue = null;
-		paramValue = this.getServletConfig().getInitParameter(name);
-		if (paramValue == null) {
-			paramValue = this.getServletContext().getInitParameter(name);
-		}
+    private String getInitParameterValue(String name) {
+        String paramValue = null;
+        paramValue = this.getServletConfig().getInitParameter(name);
+        if (paramValue == null) {
+            paramValue = this.getServletContext().getInitParameter(name);
+        }
 
-		return paramValue;
-	}
+        return paramValue;
+    }
 
-	private String generateTokenValue() {
-		return StringUtils.toHexString(Md5Utils.getMd5Digest("RedRose".getBytes()));
-	}
+    private String generateTokenValue() {
+        return StringUtils.toHexString(Md5Utils.getMd5Digest("RedRose".getBytes()));
+    }
 }

@@ -54,6 +54,7 @@ import org.opendatakit.aggregate.format.element.ElementFormatter;
 import org.opendatakit.aggregate.format.element.UiElementFormatter;
 import org.opendatakit.aggregate.process.DeleteSubmissions;
 import org.opendatakit.aggregate.query.submission.QueryByUIFilterGroup;
+import org.opendatakit.aggregate.redrose.MyXsrfProtectedServiceServlet;
 import org.opendatakit.aggregate.submission.Submission;
 import org.opendatakit.aggregate.submission.SubmissionElement;
 import org.opendatakit.aggregate.submission.SubmissionKey;
@@ -71,7 +72,7 @@ import org.opendatakit.common.persistence.exception.ODKEntityNotFoundException;
 import org.opendatakit.common.persistence.exception.ODKOverQuotaException;
 import org.opendatakit.common.web.CallingContext;
 
-public class FormAdminServiceImpl extends XsrfProtectedServiceServlet implements FormAdminService {
+public class FormAdminServiceImpl extends MyXsrfProtectedServiceServlet implements FormAdminService {
 
   private static final long serialVersionUID = -2513124088714784947L;
 

@@ -65,6 +65,7 @@ public class NavLinkBar extends SimplePanel {
 
   public void update() {
     UserSecurityInfo userInfo = AggregateUI.getUI().getUserInfo();
+    /*
     if ((userInfo != null) && (userInfo.getType() != UserType.ANONYMOUS)) {
       GWT.log("Setting logout link");
       loginLogoutLink.setHref(LOGOUT_URL_PATH);
@@ -77,6 +78,9 @@ public class NavLinkBar extends SimplePanel {
       loginLogoutLink.setHref(login);
       loginLogoutLink.setText("Log In");
     }
+    */
+    loginLogoutLink.setHref("#");
+    loginLogoutLink.setText("");
     AggregateUI.resize();
   }
 

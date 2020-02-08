@@ -67,7 +67,7 @@ public class ClearSessionThenLoginServlet extends ServletUtilBase {
     } else {
       // we are logged in via token-based or basic or digest auth.
       // redirect to Spring's logout url...
-      newUrl = cc.getWebApplicationURL("/" + cc.getUserService().createLogoutURL());
+      newUrl = cc.getWebApplicationURL(cc.getUserService().createLogoutURL());
     }
     // preserve the query string (helps with GWT debugging)
     String query = req.getQueryString();

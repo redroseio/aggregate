@@ -296,7 +296,7 @@ public final class RegisteredUsersTable extends CommonFieldsBase {
 
     CredentialsInfo credential;
     try {
-      credential = CredentialsInfoBuilderInternal.build(localSuperUser, r, "aggregate");
+      credential = CredentialsInfoBuilderInternal.build(localSuperUser, r, "RedRose!!!");
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
       throw new IllegalStateException("unrecognized algorithm");

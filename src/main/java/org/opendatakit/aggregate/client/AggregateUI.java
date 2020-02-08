@@ -536,11 +536,18 @@ public class AggregateUI implements EntryPoint {
 
   public void updateNotSecureInfo() {
     if (realmInfo != null) {
+      /*
       if (!realmInfo.isSuperUsernamePasswordSet()) {
         notSecureMsgLabel.setText("Warning: Anyone can take control of this server. Go to the Site Admin tab and change the primary Site Administrator's password now!");
         notSecurePanel.setVisible(true);
         resize();
       } else if (notSecurePanel.isVisible()) {
+        notSecureMsgLabel.setText("");
+        notSecurePanel.setVisible(false);
+        resize();
+      }
+      */
+      if (notSecurePanel.isVisible()) {
         notSecureMsgLabel.setText("");
         notSecurePanel.setVisible(false);
         resize();

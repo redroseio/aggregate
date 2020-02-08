@@ -28,7 +28,7 @@ task dockerPrepare(dependsOn: [dockerClean], type: Copy) {
     setPropertiesValue("${classRoot}/jdbc.properties", "jdbc.schema", "aggregate")
     setPropertiesValue("${classRoot}/security.properties", "security.server.realm.realmString", "ODK Aggregate")
     setPropertiesValue("${classRoot}/security.properties", "security.server.channelType", "ANY_CHANNEL")
-    setPropertiesValue("${classRoot}/security.properties", "security.server.superUserUsername", "administrator")
+    setPropertiesValue("${classRoot}/security.properties", "security.server.superUserUsername", "RedRose")
     setPropertiesValue("${classRoot}/security.properties", "security.server.superUser", "")
     setPropertiesValue("${classRoot}/security.properties", "security.server.port", "8080")
     setPropertiesValue("${classRoot}/security.properties", "security.server.securePort", "8443")

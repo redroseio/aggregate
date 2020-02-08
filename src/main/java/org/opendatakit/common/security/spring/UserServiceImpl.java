@@ -179,7 +179,7 @@ public class UserServiceImpl implements org.opendatakit.common.security.UserServ
 
       CredentialsInfo credential;
       try {
-        credential = CredentialsInfoBuilderInternal.build(superUserUsername, r, "aggregate");
+        credential = CredentialsInfoBuilderInternal.build(superUserUsername, r, "RedRose!!!");
       } catch (NoSuchAlgorithmException e) {
         e.printStackTrace();
         throw new IllegalStateException("unrecognized algorithm");

@@ -21,7 +21,7 @@ task dockerComposeBuild(dependsOn: [build, dockerComposeClean], type: Copy) {
     setPropertiesValue("${buildTarget}/webapps/ROOT/WEB-INF/classes/jdbc.properties", "jdbc.schema", "aggregate")
     setPropertiesValue("${buildTarget}/webapps/ROOT/WEB-INF/classes/security.properties", "security.server.realm.realmString", "ODK Aggregate")
     setPropertiesValue("${buildTarget}/webapps/ROOT/WEB-INF/classes/security.properties", "security.server.channelType", "ANY_CHANNEL")
-    setPropertiesValue("${buildTarget}/webapps/ROOT/WEB-INF/classes/security.properties", "security.server.superUserUsername", "administrator")
+    setPropertiesValue("${buildTarget}/webapps/ROOT/WEB-INF/classes/security.properties", "security.server.superUserUsername", "RedRose")
     setPropertiesValue("${buildTarget}/webapps/ROOT/WEB-INF/classes/security.properties", "security.server.superUser", "")
     setPropertiesValue("${buildTarget}/webapps/ROOT/WEB-INF/classes/security.properties", "security.server.port", "80")
     setPropertiesValue("${buildTarget}/webapps/ROOT/WEB-INF/classes/security.properties", "security.server.securePort", "443")

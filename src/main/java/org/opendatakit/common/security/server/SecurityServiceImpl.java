@@ -104,12 +104,14 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements
     r.setBasicAuthHashEncoding(mde.getAlgorithm());
     r.setSuperUserEmail(cc.getUserService().getSuperUserEmail());
     r.setSuperUsername(cc.getUserService().getSuperUserUsername());
+    /*
     try {
       r.setSuperUsernamePasswordSet(cc.getUserService().isSuperUsernamePasswordSet(cc));
     } catch (ODKDatastoreException e) {
       e.printStackTrace();
       throw new DatastoreFailureException("Unable to access datastore");
     }
+    */
     // User interface layer uses this URL to submit password changes securely
     r.setChangeUserPasswordURL(cc.getWebApplicationURL(UserManagePasswordsServlet.ADDR));
     return r;

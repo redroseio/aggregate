@@ -16,19 +16,10 @@
 
 package org.opendatakit.aggregate.server;
 
-import static org.opendatakit.aggregate.buildconfig.BuildConfig.VERSION;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import org.opendatakit.aggregate.ContextFactory;
 import org.opendatakit.aggregate.client.exception.RequestFailureException;
@@ -106,41 +97,6 @@ public class PreferenceServiceImpl extends RemoteServiceServlet implements
 
   @Override
   public String getVersioNote() {
-    String shortVersion = VERSION.contains("-") ? VERSION.substring(0, VERSION.indexOf("-")) : VERSION;
-    String latestAvailableVersion = getLatestAvailableVersion();
-    return latestAvailableVersion == null
-        ? shortVersion + " - Version check failed"
-        : shortVersion.equals(latestAvailableVersion)
-        ? shortVersion + " - You're up to date!"
-        : shortVersion + " - <a href=\"https://github.com/opendatakit/aggregate/releases/latest\" target=\"_blank\">Update available</a>";
-  }
-
-  synchronized private static String getLatestAvailableVersion() {
-    if (latestAvailableVersionRefreshRequired()) {
-      try {
-        log.warn("Getting latest available version");
-        URL url = new URL("https://api.github.com/repos/opendatakit/aggregate/releases/latest");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        if (con.getResponseCode() == 200)
-          try (InputStream in = con.getInputStream()) {
-            LATEST_AVAILABLE_VERSION = Optional.ofNullable(JSON.readTree(in))
-                .map(node -> node.get("tag_name"))
-                .map(JsonNode::asText)
-                .orElse(null);
-          }
-        else
-          log.error("Can't get latest available version - GitHub responded with HTTP " + con.getResponseCode() + " " + con.getResponseMessage());
-        LAST_REFRESH_OF_LATEST_AVAILABLE_VERSION = LocalDate.now();
-      } catch (IOException e) {
-        log.error("Can't get latest available version", e);
-      }
-    }
-    return LATEST_AVAILABLE_VERSION;
-  }
-
-  private static boolean latestAvailableVersionRefreshRequired() {
-    return Duration.between(LAST_REFRESH_OF_LATEST_AVAILABLE_VERSION.atStartOfDay(), LocalDateTime.now()).abs()
-        .compareTo(PERIOD_OF_REFRESH_LATEST_AVAILABLE_VERSION) > 0;
+    return "You're up to date!";
   }
 }

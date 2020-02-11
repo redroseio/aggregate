@@ -97,6 +97,6 @@ public class PreferenceServiceImpl extends RemoteServiceServlet implements
 
   @Override
   public String getVersioNote() {
-    return "You're up to date!";
+    return "";
   }
 }

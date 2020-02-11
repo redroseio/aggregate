@@ -51,7 +51,7 @@ function setHeights() {
     var tab1Height = $(".tab_measure_1").first().height();
 
     // compute and set the offset for the top of the layout_panel
-    console.log("helpPanelHeight " + helpPanelHeight + " imageHeight " + imageHeight + " tab1Height " + tab1Height);
+    //console.log("helpPanelHeight " + helpPanelHeight + " imageHeight " + imageHeight + " tab1Height " + tab1Height);
     var layoutPanelTop = maxExtrasHeight - tab1Height;
     if ( layoutPanelTop < 0 ) layoutPanelTop = 0;
     // push down to leave room for error messages
@@ -63,7 +63,7 @@ function setHeights() {
     	allAlertMessagesHeight = $("#not_secure_content").height() + $("#error_content").height();
     }
     layoutPanelTop = layoutPanelTop + allAlertMessagesHeight;
-    console.log("layoutPanelTop " + layoutPanelTop);
+    //console.log("layoutPanelTop " + layoutPanelTop);
 	
 	if ( $("#layout_panel").get(0) !== undefined && $("#layout_panel").offset().top !== layoutPanelTop ) {
 		$("#layout_panel").offset({top: layoutPanelTop });
@@ -171,3 +171,10 @@ function ensureWidth(table, width) {
 		}
 	}
 }
+
+$(document).ready(function() {
+	onAggregateResize();
+	setTimeout(function() {
+		onAggregateResize();
+	}, 3000)
+});

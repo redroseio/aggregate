@@ -351,6 +351,10 @@ public final class RegisteredUsersTable extends CommonFieldsBase {
       a.setUser(r.getUri());
       a.setGrantedAuthority(SecurityServiceUtil.dataCollectorAuth);
       ds.putEntity(a, user);
+      UserGrantedAuthority b = ds.createEntityUsingRelation(relation, user);
+      b.setUser(r.getUri());
+      b.setGrantedAuthority(SecurityServiceUtil.dataViewerAuth);
+      ds.putEntity(b, user);
     }
   }
 

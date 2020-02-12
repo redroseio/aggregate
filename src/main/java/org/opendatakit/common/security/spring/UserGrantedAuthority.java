@@ -181,13 +181,13 @@ public final class UserGrantedAuthority extends CommonFieldsBase {
     return this.getStringField(USER);
   }
 
-  private final void setUser(String value) {
+  public final void setUser(String value) {
     if (!this.setStringField(USER, value)) {
       throw new IllegalStateException("overflow user");
     }
   }
 
-  private final void setGrantedAuthority(GrantedAuthority value) {
+  public final void setGrantedAuthority(GrantedAuthority value) {
     if (!this.setStringField(GRANTED_AUTHORITY, value.getAuthority())) {
       throw new IllegalStateException("overflow grantedAuthority");
     }

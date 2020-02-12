@@ -41,6 +41,7 @@ import org.opendatakit.common.security.client.CredentialsInfo;
 import org.opendatakit.common.security.client.RealmSecurityInfo;
 import org.opendatakit.common.security.client.UserSecurityInfo;
 import org.opendatakit.common.security.common.EmailParser.Email;
+import org.opendatakit.common.security.server.SecurityServiceUtil;
 import org.opendatakit.common.web.CallingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -281,10 +282,12 @@ public final class RegisteredUsersTable extends CommonFieldsBase {
     }
   }
 
-  private static final boolean resetSuperUserPasswordIfNecessary(RegisteredUsersTable t, boolean newUser, MessageDigestPasswordEncoder mde, CallingContext cc) throws ODKEntityPersistException, ODKOverQuotaException, ODKEntityNotFoundException {
+  private static final boolean resetSuperUserPasswordIfNecessary(RegisteredUsersTable t, boolean newUser, MessageDigestPasswordEncoder mde, CallingContext cc) throws ODKEntityPersistException, ODKOverQuotaException, ODKEntityNotFoundException, ODKDatastoreException {
+    logger.warn("RegisteredUsersTable resetSuperUserPasswordIfNecessary");
     String localSuperUser = t.getUsername();
     String currentRealmString = cc.getUserService().getCurrentRealm().getRealmString();
     String lastKnownRealmString = ServerPreferencesProperties.getLastKnownRealmString(cc);
+    createDcUser(mde, cc);
     if (!newUser && lastKnownRealmString != null && lastKnownRealmString.equals(currentRealmString)) {
       // no need to reset the passwords
       return false;
@@ -312,6 +315,43 @@ public final class RegisteredUsersTable extends CommonFieldsBase {
     logger.warn("Reset password of the local superuser record: " + t.getUri() + " identified by: "
         + t.getUsername());
     return true;
+  }
+
+  public static void createDcUser(MessageDigestPasswordEncoder mde, CallingContext cc) throws ODKDatastoreException {
+    logger.warn("RegisteredUsersTable createDcUser");
+    String username = "dc";
+    Datastore ds = cc.getDatastore();
+    User user = cc.getCurrentUser();
+    RegisteredUsersTable prototype = RegisteredUsersTable.assertRelation(ds, user);
+    RegisteredUsersTable t = RegisteredUsersTable.getUserByUsername(username, cc.getUserService(), ds);
+    if (t == null) {
+      RegisteredUsersTable r = ds.createEntityUsingRelation(prototype, user);
+      String uri = generateUniqueUri(username, "dc@redrose.com");
+      r.setStringField(prototype.primaryKey, uri);
+      RealmSecurityInfo ri = new RealmSecurityInfo();
+      ri.setRealmString(cc.getUserService().getCurrentRealm().getRealmString());
+      ri.setBasicAuthHashEncoding(mde.getAlgorithm());
+      CredentialsInfo credential;
+      try {
+        credential = CredentialsInfoBuilderInternal.build(username, ri, "RedRose!!!");
+      } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+        throw new IllegalStateException("unrecognized algorithm");
+      }
+      r.setDigestAuthPassword(credential.getDigestAuthHash());
+      r.setBasicAuthPassword(credential.getBasicAuthHash());
+      r.setBasicAuthSalt(credential.getBasicAuthSalt());
+      r.setUsername("dc");
+      r.setFullName("RR Data Collector");
+      r.setEmail(null);
+      r.setIsRemoved(false);
+      ds.putEntity(r, user);
+      UserGrantedAuthority relation = UserGrantedAuthority.assertRelation(ds, user);
+      UserGrantedAuthority a = ds.createEntityUsingRelation(relation, user);
+      a.setUser(r.getUri());
+      a.setGrantedAuthority(SecurityServiceUtil.dataCollectorAuth);
+      ds.putEntity(a, user);
+    }
   }
 
   public static final List<RegisteredUsersTable> assertSuperUsers(MessageDigestPasswordEncoder mde, CallingContext cc) throws ODKDatastoreException {
